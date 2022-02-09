@@ -1,8 +1,10 @@
 package com.shi.community;
 
 import com.shi.community.dao.DiscussPostMapper;
+import com.shi.community.dao.LoginTicketMapper;
 import com.shi.community.dao.UserMapper;
 import com.shi.community.entity.DiscussPost;
+import com.shi.community.entity.LoginTicket;
 import com.shi.community.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ public class MapperTest {
     private UserMapper userMapper;
     @Autowired
     private DiscussPostMapper discussPostMapper;
+    @Autowired
+    private LoginTicketMapper loginTicketMapper;
 
     @Test
     public void selectTset(){
@@ -50,7 +54,24 @@ public class MapperTest {
         }
         int i = discussPostMapper.selectDiscussPostRows(149);
         System.out.println(i);
+    }
 
+
+    @Test
+    public void loginADD(){
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setUserId(101);
+        loginTicket.setTicket("abc");
+        loginTicket.setStatus(0);
+        loginTicket.setExpired(new Date(System.currentTimeMillis() + 1000*600));
+
+        loginTicketMapper.insertLoginTicket(loginTicket);
+    }
+    @Test
+    public void selectloginTicket(){
+        LoginTicket abc = loginTicketMapper.selectByTicket("abc");
+        System.out.println(abc);
+        loginTicketMapper.updateStatus("abc",1);
     }
 
 }
