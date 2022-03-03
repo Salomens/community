@@ -18,7 +18,7 @@ public interface LoginTicketMapper {
             "select id,user_id,ticket,status,expired ",
             "from login_ticket where ticket = #{ticket}"
     })
-    LoginTicket selectByTicket(String ticket);
+     LoginTicket selectByTicket(String ticket);
 
 
     @Update({

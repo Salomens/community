@@ -67,11 +67,11 @@ public class MapperTest {
 
         loginTicketMapper.insertLoginTicket(loginTicket);
     }
-    @Test
-    public void selectloginTicket(){
-        LoginTicket abc = loginTicketMapper.selectByTicket("abc");
-        System.out.println(abc);
-        loginTicketMapper.updateStatus("abc",1);
-    }
+//    @Test
+//    public void selectloginTicket(){
+//        LoginTicket abc = loginTicketMapper.selectByTicket("abc");
+//        System.out.println(abc);
+//        loginTicketMapper.updateStatus("abc",1);
+//    }
 
 }
