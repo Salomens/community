@@ -1,5 +1,7 @@
 package com.shi.community;
 
+import com.shi.community.entity.DiscussPost;
+import com.shi.community.service.DiscussPostService;
 import com.shi.community.util.SensitiveFilter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.test.context.ContextConfiguration;
 public class SensitiveTest {
     @Autowired
     private SensitiveFilter sensitiveFilter;
+    @Autowired
+    private DiscussPostService discussPostService;
 
     @Test
     public void testSens(){
@@ -19,5 +23,6 @@ public class SensitiveTest {
         System.out.println(filter);
 
     }
+
 
 }
