@@ -33,4 +33,10 @@
         insert into discuss_post (<include refid="insertFiles"></include>)
         values (#{userId},#{title},#{content},#{type},#{status},#{createTime},#{commentCount},#{score})
     </insert>
+
+    <select id="selectDiscussPostNById" resultType="discussPost">
+        select <include refid="selectFiles"></include>
+        from discuss_post
+        where id = #{id}
+    </select>
 </mapper>

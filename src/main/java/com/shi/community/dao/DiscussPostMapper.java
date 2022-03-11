@@ -13,4 +13,7 @@ public interface DiscussPostMapper {
     int selectDiscussPostRows(@Param("userId") int userId);//查询帖子的行数
     //插入一条帖子
     int insertDiscussPost(DiscussPost discussPost);
+
+    //通过id找帖子
+    DiscussPost selectDiscussPostNById(int id);
 }
