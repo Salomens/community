@@ -2,6 +2,7 @@ package com.shi.community.controller;
 
 import com.shi.community.annotation.LoginRequired;
 import com.shi.community.entity.User;
+import com.shi.community.service.LikeService;
 import com.shi.community.service.UserService;
 import com.shi.community.util.CommunityUtil;
 import com.shi.community.util.HostHolder;
@@ -45,6 +46,8 @@ public class UserController {
 
     @Autowired
     private HostHolder hostHolder;
+    @Autowired
+    private LikeService likeService;
 
     @LoginRequired
     @GetMapping("/setting")
@@ -111,6 +114,19 @@ public class UserController {
             logger.error("读取头像失败" + e.getMessage());
         }
 
+    }
+    //个人主页
+    @GetMapping("/profile/{userId}")
+    public String getProfilePage(@PathVariable("userId") int userId, Model model){
+        User user = userService.findUserById(userId);
+        if (user == null){
+            throw new RuntimeException("该用户不存在");
+        }
+        model.addAttribute("user",user);
+        int likeCount = likeService.findUserLikeCount(userId);
+        model.addAttribute("likeCount",likeCount);
+
+        return "/site/profile";
     }
 
 }
