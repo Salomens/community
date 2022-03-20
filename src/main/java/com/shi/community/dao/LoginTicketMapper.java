@@ -4,6 +4,7 @@ import com.shi.community.entity.LoginTicket;
 import org.apache.ibatis.annotations.*;
 
 @Mapper
+@Deprecated
 public interface LoginTicketMapper {
     //增加一个用户凭证
     @Insert({
