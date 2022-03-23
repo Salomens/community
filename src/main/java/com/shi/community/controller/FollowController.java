@@ -1,7 +1,9 @@
 package com.shi.community.controller;
 
+import com.shi.community.entity.Event;
 import com.shi.community.entity.Page;
 import com.shi.community.entity.User;
+import com.shi.community.event.EventProducer;
 import com.shi.community.service.FollowService;
 import com.shi.community.service.UserService;
 import com.shi.community.util.CommunityConstant;
@@ -28,6 +30,8 @@ public class FollowController implements CommunityConstant {
     private HostHolder hostHolder;
     @Autowired
     private UserService userService;
+    @Autowired
+    private EventProducer eventProducer;
 
     @PostMapping("/follow")
     @ResponseBody
@@ -43,6 +47,16 @@ public class FollowController implements CommunityConstant {
     public String unfollow(int entityType, int entityId){
         User user = hostHolder.getUser();
         followService.unfollow(user.getId() ,entityType,entityId);
+
+        //触发关注事件
+        Event event = new Event()
+                .setTopic(TOPIC_FOLLOW)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(entityType)
+                .setEntityId(entityId)
+                .setEntityUserId(entityId);
+        eventProducer.fireEvent(event);
+
 
         return CommunityUtil.getJSONString(0,"已取消关注");
     }
