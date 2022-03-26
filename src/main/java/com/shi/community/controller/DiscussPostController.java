@@ -119,5 +119,28 @@ public class DiscussPostController {
         model.addAttribute("comments",commentVoList);
         return "/site/discuss-detail";
     }
+    //置顶 异步请求
+    @PostMapping("/top")
+    @ResponseBody
+    public String top(int id){
+        discussPostService.updateType(id,1);
+        return CommunityUtil.getJSONString(0);
+    }
+
+    //加精 异步请求
+    @PostMapping("/wonderful")
+    @ResponseBody
+    public String wonderful(int id){
+        discussPostService.updateStatus(id,1);
+        return CommunityUtil.getJSONString(0);
+    }
+
+    //删除 异步请求
+    @PostMapping("/delete")
+    @ResponseBody
+    public String delete(int id){
+        discussPostService.updateStatus(id,2);
+        return CommunityUtil.getJSONString(0);
+    }
 
 }
