@@ -63,4 +63,8 @@ public class RedisTests {
         System.out.println(redisTemplate.opsForZSet().zCard(redisKey));
         System.out.println(redisTemplate.opsForZSet().score(redisKey,"sa"));
     }
+    @Test
+    public void testHyperLogLog(){
+
+    }
 }

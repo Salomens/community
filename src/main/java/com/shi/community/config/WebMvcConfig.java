@@ -1,9 +1,7 @@
 package com.shi.community.config;
 
-import com.shi.community.controller.interceptor.AlphaInterceptor;
-import com.shi.community.controller.interceptor.LoginRequiredInterceptor;
-import com.shi.community.controller.interceptor.LoginTicketInterceptor;
-import com.shi.community.controller.interceptor.MessageInterceptor;
+import com.shi.community.controller.interceptor.*;
+import com.shi.community.service.DataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -28,6 +26,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 //    private LoginRequiredInterceptor loginRequiredInterceptor;
     @Autowired
     private MessageInterceptor messageInterceptor;
+    @Autowired
+    private DataInterceptor dataInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -41,6 +41,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 //                .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg")//排除的路径
 //        ;
         registry.addInterceptor(messageInterceptor)//添加拦截器
+                .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg");//排除的路径
+
+        registry.addInterceptor(dataInterceptor)//添加拦截器
                 .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg");//排除的路径
     }
 }
