@@ -10,8 +10,10 @@ import com.shi.community.service.LikeService;
 import com.shi.community.service.UserService;
 import com.shi.community.util.CommunityUtil;
 import com.shi.community.util.HostHolder;
+import com.shi.community.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.CustomEditorConfigurer;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +37,8 @@ public class DiscussPostController {
     private CommentService commentService;
     @Autowired
     private LikeService likeService;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @PostMapping("/add")
     @ResponseBody
@@ -49,6 +53,9 @@ public class DiscussPostController {
         post.setContent(content);
         post.setCreateTime(new Date());
         discussPostService.addDiscussPost(post);
+        //计算帖子分数
+        String redisKey = RedisKeyUtil.getPostScoreKey();
+        redisTemplate.opsForSet().add(redisKey,post.getId());
         return CommunityUtil.getJSONString(0,"发布成功");
     }
     @GetMapping("/detail/{discussPostId}")
@@ -132,6 +139,9 @@ public class DiscussPostController {
     @ResponseBody
     public String wonderful(int id){
         discussPostService.updateStatus(id,1);
+        //计算帖子分数
+        String redisKey = RedisKeyUtil.getPostScoreKey();
+        redisTemplate.opsForSet().add(redisKey,id);
         return CommunityUtil.getJSONString(0);
     }
 
